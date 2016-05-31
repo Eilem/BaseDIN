@@ -54,7 +54,7 @@
         </section>
 
         {{-- Google Analytcs --}}
-        @if($settings->google_analytcs)
+        @if(isset($settings->google_analytcs))
             {!! $settings->google_analytcs !!}
         @endif
 

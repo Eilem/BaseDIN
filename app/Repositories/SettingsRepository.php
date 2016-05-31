@@ -20,10 +20,4 @@ class SettingsRepository extends BaseRepository
 
     }
 
-    public function getMediaKit()
-    {
-        return $this->findById(1, ['media_kit']);
-
-    }
-
 }

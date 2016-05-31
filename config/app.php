@@ -146,6 +146,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         /*
+        * View Composers Provider
+        */
+        App\Providers\ComposerServiceProvider::class,
+        
+        /*
          * Metatags
          */
         Eusonlito\LaravelMeta\MetaServiceProvider::class,
@@ -158,7 +163,9 @@ return [
         /*
          * Image Din
          */  
-        Din\DinImage\DinImageServiceProvider::class
+        Din\DinImage\DinImageServiceProvider::class,
+        
+        
         
     ],
 

@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Builder as EloquentQueryBuilder;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Pagination\AbstractPaginator as Paginator;
-use App\Repositories\iRepositories\iBaseRepository;
 
-abstract class BaseRepository //implements iBaseRepository
+abstract class BaseRepository 
 {
 
     /**

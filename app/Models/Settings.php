@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Presenters\SettingsPresenter;
 use Robbo\Presenter\PresentableInterface;
 
-class Settings extends Model
+class Settings extends Model implements PresentableInterface
 {
 
     protected $table = 'settings';
