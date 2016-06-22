@@ -170,8 +170,6 @@ abstract class BasePresenter extends Presenter {
               }
 
               if (!is_null($width) && !is_null($height)) {
-                  $resized = $imageHelper->setImage($src, $alt, 'fit', $width, $height
-                          )->render(true);
 
                   $resized = DinImage::setWidth($width)
                                  ->setHeight($height)

@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "robclancy/presenter": "1.3.*",
         "laravelcollective/html": "5.1.*",
-        "dindigital/din-image": "dev-master"
+        "dindigital/din-image": "dev-master",
+        "barryvdh/laravel-debugbar": "^2.2"
         
     },
     "require-dev": {
