@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Models\Settings;
 use App\Repositories\BaseRepository;
 
 class SettingsRepository extends BaseRepository
@@ -14,10 +13,29 @@ class SettingsRepository extends BaseRepository
         parent::__construct();
     }
 
+    /**
+     * Obtém a Configuração da aplicação definida no painel administrativo
+     * @return Settings
+     */
     public function get()
     {
         return $this->findById(1);
 
+    }
+    
+    /**
+     * Obtém settings contendo as informações das metatags da home 
+     * 
+     * @return Settings
+     */
+    public function getHomeMetatags()
+    {
+        $this->arrayField = [
+            'home_title',
+            'home_description'
+        ];
+        
+        return $this->findById(1);
     }
 
 }

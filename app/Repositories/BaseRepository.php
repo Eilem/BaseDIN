@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Pagination\AbstractPaginator as Paginator;
 
-abstract class BaseRepository 
+abstract class BaseRepository
 {
 
     /**
@@ -16,6 +16,13 @@ abstract class BaseRepository
      * @var string
      */
     protected $model;
+
+    /**
+     * [$modelApp description]
+     * @var srtring
+     */
+    private $modelApp;
+
 
     /**
      * Query
@@ -46,15 +53,39 @@ abstract class BaseRepository
     */
     protected $with = array();
 
+    /**
+     * Método construtor
+     */
     public function __construct()
     {
-        $this->model = app($this->model);
+        $this->makeModel();
+    }
+
+
+    /**
+     * 
+     * Reset model 
+     * reseta a query definida 
+     */
+    public function resetModel()
+    {
+        $this->makeModel();
+    }
+
+    /**
+    *
+    * Create model set class in model
+    */
+    public function makeModel()
+    {
+        $this->modelApp = app($this->model);
 
         /**
          * Set a EloquentQueryBuilder|QueryBuilder in $this->model
          */
-        $this->query = $this->model->newQuery();
+        $this->query = $this->modelApp->newQuery();
     }
+
 
     public static function setId()
     {
@@ -97,10 +128,15 @@ abstract class BaseRepository
         //verificando se deve trazer todos os atributos ou somente os atributos definidos em $arrayField
         if(!count($this->arrayField))
         {
-            return $query->get();
+            $collection =  $query->get();
         }
 
-        return $query->get($this->arrayField);
+        $collection =  $query->get($this->arrayField);
+
+        $this->resetModel();
+
+        return $collection;
+
 
     }
 
@@ -125,7 +161,11 @@ abstract class BaseRepository
             return $this->query->first();
         }
 
-        return $this->query->first($this->arrayField);
+        $result =  $this->query->first($this->arrayField);
+
+        $this->resetModel();
+
+        return $result;
     }
 
 
@@ -137,12 +177,18 @@ abstract class BaseRepository
      */
     public function lists($column, $key = null)
     {
-        return $this->query->lists($column, $key);
+        $list =  $this->query->lists($column, $key);
+
+        $this->resetModel();
+
+        return $list;
     }
 
     /**
-     * Set With
-     * @return type
+     * Seta na query os relacionamentos que devem ser retornados o obter o Objeto
+     * Relacionamentos definidos na variável <b>with</b>
+     * 
+     * @return query
      */
     public function setWith( )
     {
@@ -205,10 +251,13 @@ abstract class BaseRepository
         //verificando se deve trazer todos os atributos ou somente os atributos definidos em $arrayField
         if(!count($this->arrayField))
         {
-            return $this->query->findOrFail($id);
+            $result =  $this->query->findOrFail($id);
         }
 
-        return $this->query->findOrFail($id, $this->arrayField);
+        $result =  $this->query->findOrFail($id, $this->arrayField);
+
+        $this->resetModel();
+        return $result;
     }
 
 

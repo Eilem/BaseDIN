@@ -15,27 +15,33 @@ abstract class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
-     * Seta metag
-     * @param string $title  titulo da página
-     * @param string $description descrição da página
-     * @param string $image imagem da página
-     * @param bollean $home
+     * Seta as metatag da Home, definidas em settings
      */
-    protected function meta($title, $description = null, $image = null, $home = false)
+    protected function homeMeta()
     {
         $settingsRepository = new SettingsRepository();
         $settings = $settingsRepository->get();
 
         Meta::meta('robots', 'index,follow');
+        Meta::meta( 'title', $settings->home_title );
+        Meta::meta('description', $settings->home_description);
+        Meta::meta( 'image', asset( getenv( 'DEFAULT_IMAGE') ) );
+        
+    }
 
-        if ( $home )
-        {
-            Meta::meta( 'title', $settings->home_title );
+    /**
+     * Seta metatag
+     * @param String $title         Título da página
+     * @param String $description   Descrição da página
+     * @param String $image         Imagem da página
+     */
+    protected function meta($title, $description = null, $image = null)
+    {
+        $settingsRepository = new SettingsRepository();
+        $settings = $settingsRepository->get();
 
-        } else {
-
-            Meta::meta( 'title', $title . ' - ' . $settings->title );
-        }
+        Meta::meta('robots', 'index,follow');
+        Meta::meta( 'title', $title . ' - ' . $settings->title );
 
         if( $description )
         {
