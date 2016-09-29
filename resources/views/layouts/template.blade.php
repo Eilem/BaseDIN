@@ -11,6 +11,7 @@
         <meta name="author" content="{!! getenv('APPLICATION_NAME') !!}">
         <meta name="robots" content="index, nofollow">
         
+        {{--  TOKEN para envio de formulários --}}
         <meta name="csrf-token" content="{{ csrf_token() }}"> 
 
         <link rel="shortcut icon" href="/favicon.ico">
@@ -47,7 +48,7 @@
             @include('includes.header')
 
             <div class="dd-wrapper">
-                    @yield('content')
+                @yield('content')
             </div>
 
             @include('includes.footer')
