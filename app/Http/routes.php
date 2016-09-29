@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/404', function () {
-    return view('errors.404');
-});
+
+//página de erro
+Route::get('/404', [ 'as' => '404', 'uses' => 'ErrorController@index' ]);
