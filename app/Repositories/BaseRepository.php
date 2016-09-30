@@ -262,12 +262,13 @@ abstract class BaseRepository
 
 
     /**
-    * Persiste a entidade com parametros recebidos no parâMultipleIterator
-    * @param array $input
+    * Persiste a entidade com parametros recebidos 
+     * 
+     * @param array $input
     */
     public function create($input)
     {
-        return $this->model->create($input);
+        return $this->modelApp->create($input);
     }
 
 
