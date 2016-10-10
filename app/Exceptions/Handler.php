@@ -56,9 +56,8 @@ class Handler extends ExceptionHandler
        if($this->isHttpException($e))
        {
 
-           \Meta::title('Página não localizada');
-
-           return \Response::view('errors.404', 404);
+         //retornando página de erro
+          return redirect(route('404'));
 
        } else {
 

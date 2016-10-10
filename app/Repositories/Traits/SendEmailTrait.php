@@ -10,10 +10,10 @@ trait SendEmailTrait
 {
     /**
      * View do email
-     * @var view 
+     * @var view
      */
     protected $view;
-    
+
    /*
     * Campos a serem enviados popr email
     */
@@ -21,25 +21,25 @@ trait SendEmailTrait
 
     /**
      * Título do usuário do email, setado no .env na variável "MAIL_USERNAME"
-     * @var String 
+     * @var String
      */
     private $from;
 
     /**
-     * 
+     *
      * @var Array  Lista de emails ao qual o email será enviado
      */
     protected $emailTo = array();
-    
+
     /**
      * Nome exibido no email enviado (Contato)
-     * @var String 
+     * @var String
      */
     protected $name;
 
     /**
      * Assunto do email enviado
-     * @var String 
+     * @var String
      */
     protected $subject;
 
@@ -49,7 +49,7 @@ trait SendEmailTrait
      * @var String
      */
     protected $replyTo;
-    
+
     /**
      * Nome do Usuário para quem esse email será respondido
      * @var String
@@ -57,27 +57,28 @@ trait SendEmailTrait
     protected $replyName;
 
     /**
-     * Efetua o envio do email a partir dos dados setados 
+     * Efetua o envio do email a partir dos dados setados
      * @return type
      */
     public function sendEmail()
     {
         $this->from = getenv('MAIL_USERNAME');
 
+        //dados enviados por email
         $data = $this->arrayData;
-        
+
         // tratando o valor de emailTo , quebrando em array
         $this->emailTo = $this->prepareArrayEmail();
-        
+
         try{
-            
-            return Mail::send( 
+
+            return Mail::send(
                     $this->view,
                     [ 'data' => $data] ,
                     function ($m){
 
                         $m->from($this->from, getenv("APPLICATION_NAME")); // sistema q envia
-                        
+
                         $m->to($this->emailTo[0], $this->name);  //área
 
                         if(count($this->emailTo) > 1)
@@ -90,25 +91,22 @@ trait SendEmailTrait
                                 $m->cc($toCc , $this->name);
                             }
                         }
-                        
                         $m->replyTo($this->replyTo,  $this->replyName ); //user
-
                         $m->subject($this->subject);
-
                     }
             );
-            
+
         } catch (Exception $ex) {
-            
-            throw new EmailException('Desculpe, ocorreu algum problema ao enviar o email, por favor tente novamente.');  
+
+            throw new EmailException('Desculpe, ocorreu algum problema ao enviar o email, por favor tente novamente.');
         }
-       
+
     }
-    
+
     /**
      * Transforma a string de emails separada por virgula em um array de emails
-     * 
-     * @return Array 
+     *
+     * @return Array
      */
     protected function prepareArrayEmail()
     {

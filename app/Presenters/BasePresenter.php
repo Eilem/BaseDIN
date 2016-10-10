@@ -24,10 +24,19 @@ abstract class BasePresenter extends Presenter {
     }
 
     /**
-     * Decorator link Menu
+     * Decorator link complete uri
      * @return string
      */
     public function presentCompleteUri()
+    {
+        return getenv('APPLICATION_URL').$this->uri;
+    }
+
+    /**
+     * Decorator short link
+     * @return string
+     */
+    public function presentShortUrl()
     {
         return getenv('APPLICATION_URL').$this->uri;
     }
@@ -39,10 +48,76 @@ abstract class BasePresenter extends Presenter {
      * @param string $formatPresenter
      * @return type
      */
-    public function presentDateFormat($date, $formatPresenter = 'd/m/Y')
+    public function presentDateFormat($date = null , $formatPresenter = 'd/m/Y')
     {
+        if(!$date){
+            $date = $this->date;
+        }
         $dateCarbon = new Carbon($date);
         return $dateCarbon->format($formatPresenter);
+    }
+
+     /**
+     * Format data hora
+     * @param type $date
+     * @param string $formatPresenter
+     * @return string
+     */
+    public function presentUpdateDataWithHour($date = null , $formatPresenter = 'd/m/Y - H:i')
+    {
+        if(!$date){
+            $date = $this->upd_date;
+        }
+        $dateCarbon = new Carbon($date);
+        return $dateCarbon->format($formatPresenter);
+    }
+
+     /**
+     * Format data in weekday
+     * @param string $date
+     * @param string $formatPresenter
+     * @return string
+     */
+    public function presentWeekDay($date = null)
+    {
+        if(!$date){
+            $date = $this->date;
+        }
+        $dateCarbon = new Carbon($date);
+
+        switch (  $dateCarbon->dayOfWeek ) {
+          case '1':
+            return "Segunda-Feira" ;
+            break;
+
+          case '2':
+            return  "Terça-Feira";
+            break;
+
+          case '3':
+            return  "Quarta-Feira";
+            break;
+
+          case '4':
+            return  "Quinta-Feira";
+            break;
+
+          case '5':
+            return "Sexta-Feira";
+            break;
+
+          case '6':
+            return "Sábado";
+            break;
+
+          case '7':
+            return "Domingo";
+            break;
+
+          default:
+            return "";
+            break;
+        }
     }
 
     /**
@@ -53,6 +128,23 @@ abstract class BasePresenter extends Presenter {
     {
         return request()->url();
     }
+
+
+    /**
+    * Decorator description com quebra de linha
+    * @return string
+    */
+     public function presentLimitCharacter($field, $sizeMaximum, $sizeStart = 0 )
+     {
+          if(mb_strlen($field) <= $sizeMaximum)
+          {
+              return $field;
+          }
+
+          $string = substr($field, $sizeStart, $sizeMaximum - 3 );
+          return  $string."...";
+     }
+
 
     /**
    * Decorator do mês
@@ -104,7 +196,9 @@ abstract class BasePresenter extends Presenter {
 
   }
 
-
+  /**
+  * Decora a imagem da metatag
+  **/
   public function presentCoverToMetatag()
   {
      $image =  DinImage::setWidth(1000)
@@ -172,11 +266,11 @@ abstract class BasePresenter extends Presenter {
               if (!is_null($width) && !is_null($height)) {
 
                   $resized = DinImage::setWidth($width)
-                                 ->setHeight($height)
-                                 ->setName($alt)
-                                 ->setCommand('fit')
-                                 ->setImage($src)
-                                 ->render();
+                                     ->setHeight($height)
+                                     ->setName($alt)
+                                     ->setCommand('fit')
+                                     ->setImage($src)
+                                     ->render();
 
                   $image->setAttribute('alt', $alt);
                   $image->setAttribute('src', $resized);
@@ -198,6 +292,7 @@ abstract class BasePresenter extends Presenter {
       }
       return preg_replace('~<(?:!DOCTYPE|/?(?:html|body))[^>]*>\s*~i', '', $doc->saveHTML());
   }
+
 
   /**
   * Decorator description com quebra de linha

@@ -28,7 +28,7 @@ class SettingsRepository extends BaseRepository
      * 
      * @return Settings
      */
-    public function getHomeMetatags()
+    public function getInfoHome()
     {
         $this->arrayField = [
             'home_title',

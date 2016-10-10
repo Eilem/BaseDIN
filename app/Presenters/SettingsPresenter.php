@@ -14,24 +14,39 @@ class SettingsPresenter extends BasePresenter
     }
     
     /**
-     * retorna o primeiro telefone de contato
-     * @return string
+     * Retorna apenas o primeiro telefone que foi cadastrado em Settings
+     *
+     * @return string Telefone
      */
-    public function presentFirstPhone() 
+    public function presentFirstPhone()
     {
+        if( empty($this->contact_phone) )
+        {
+            return "";
+        }
+
         $colPhone  = explode(',', $this->contact_phone);
-        
-        if($colPhone)
+
+        if( count($colPhone) )
         {
             return $colPhone[0];
         }
-        
+
     }
 
-    
-    public function presentListColPhone() 
+    public function presentListColPhone()
     {
         return str_replace(',', '<br/>', $this->contact_phone);
     }
+
+    /**
+    * Decorator Endereço com quebra de linha
+    * @return string
+    */
+     public function presentAddressWithBreak()
+     {
+         return nl2br($this->address);
+     }
+
     
 }
