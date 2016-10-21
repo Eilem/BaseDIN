@@ -144,29 +144,32 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        
+
         /*
         * View Composers Provider
         */
         App\Providers\ComposerServiceProvider::class,
-        
+
         /*
          * Metatags
          */
         Eusonlito\LaravelMeta\MetaServiceProvider::class,
-        
+
         /*
          * Form HTML
-         */  
+         */
         Collective\Html\HtmlServiceProvider::class,
-        
+
         /*
          * Image Din
-         */  
+         */
         Din\DinImage\DinImageServiceProvider::class,
-        
-        
-        
+
+        /**
+         * SiteMap
+         */
+        'Roumen\Sitemap\SitemapServiceProvider'
+
     ],
 
     /*
@@ -215,23 +218,23 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        
+
         /*
          * Metatags
          */
         'Meta'    => Eusonlito\LaravelMeta\Facade::class,
-        
+
         /*
          * Form Html
          */
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        
+
         /*
          * Image Din
          */
         'DinImage' => \Din\DinImage\Facades\DinImage::class
-        
+
     ],
 
 ];

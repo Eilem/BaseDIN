@@ -18,3 +18,6 @@ Route::get('/', function () {
 
 //página de erro
 Route::get('/404', [ 'as' => '404', 'uses' => 'ErrorController@index' ]);
+
+//sitemap
+Route::get('/sitemap.xml', [ 'as' => 'sitemap.index', 'uses' => 'SitemapController@index' ]);

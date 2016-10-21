@@ -7,13 +7,14 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-        "eusonlito/laravel-meta" : "v2.0.8.2", 
+        "eusonlito/laravel-meta" : "v2.0.8.2",
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "robclancy/presenter": "1.3.*",
         "laravelcollective/html": "5.1.*",
         "dindigital/din-image": "dev-master",
-        "barryvdh/laravel-debugbar": "^2.2"
-        
+        "barryvdh/laravel-debugbar": "^2.2",
+        "roumen/sitemap": "2.6.*"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
