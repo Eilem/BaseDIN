@@ -6,6 +6,13 @@ use Mail;
 use App\Exceptions\EmailException;
 use Exception;
 
+
+
+//teste para validação do tipo do email
+use Validator;
+
+
+
 trait SendEmailTrait
 {
     /**
@@ -32,7 +39,7 @@ trait SendEmailTrait
     protected $emailTo = array();
 
     /**
-     * Nome exibido no email enviado (Contato)
+     * Nome exibido no email enviado ( Contato)
      * @var String
      */
     protected $name;
@@ -79,18 +86,40 @@ trait SendEmailTrait
 
                         $m->from($this->from, getenv("APPLICATION_NAME")); // sistema q envia
 
-                        $m->to($this->emailTo[0], $this->name);  //área
+                        //validar primeiro email da lista
+                        $firstEmail = $this->emailTo[0];
+
+                        $firstEmailInvalid = $this->validateEmail( $firstEmail);
+                        if($firstEmailInvalid)
+                        {
+                           throw new EmailException( trans('traits/send-email.exceptions.invalid_email'));
+                        }
+
+                        $m->to($firstEmail, $this->name); //área
 
                         if(count($this->emailTo) > 1)
                         {
+                            $arrayErros = array();
+
                            /**
-                            * cópias de envio do email
+                            * Setando cópias de envio do email
                             */
                             foreach($this->emailTo as $toCc)
                             {
+                                $emailInvalid = $this->validateEmail($toCc);
+
+                                if($emailInvalid)
+                                {
+                                    //email é inválido
+                                    //@todo
+                                    // futuramente lançar no log
+                                    // pensar em como informar ao cliente
+                                    continue; //email tem formato inválido , continuando a lista de emails
+                                }
                                 $m->cc($toCc , $this->name);
                             }
                         }
+
                         $m->replyTo($this->replyTo,  $this->replyName ); //user
                         $m->subject($this->subject);
                     }
@@ -114,5 +143,31 @@ trait SendEmailTrait
 
         return $arrayEmail;
     }
+
+
+    /**
+     * Valida o email antes de enviar
+     * retorna true se ouver erro do email
+     * e false se o email for válido (email sem erros)
+     *
+     * @param  [type] $email [description]
+     * @return [type]        [description]
+     */
+    private function validateEmail($email)
+    {
+          $email =  trim($email); //removendo possíveis espaços da string do email
+
+          $dadaValidation = array(
+                'email' => $email
+          );
+
+          $ruleVaslidation = array(
+                'email' => 'email'
+          );
+
+          $validator = Validator::make($dadaValidation, $ruleVaslidation);
+          return $validator->fails();
+    }
+
 
 }
