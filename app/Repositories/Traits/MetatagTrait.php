@@ -15,11 +15,12 @@ trait MetatagTrait
     {
         $settingsRepository = new SettingsRepository();
         $settings = $settingsRepository->getInfoHome();
-
+        
         Meta::meta('robots', 'index,follow');
         Meta::meta( 'title', $settings->home_title );
         Meta::meta( 'description', $settings->home_description);
         Meta::meta( 'image', asset( getenv( 'DEFAULT_IMAGE') ) );
+        
     }
 
     /**

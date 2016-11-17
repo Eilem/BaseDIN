@@ -48,6 +48,14 @@ class ClassModel extends Model implements PresentableInterface
     public $incrementing = false;
 
     /**
+     * The attributes that should be visible in arrays.
+     *
+     * @var array
+     */
+    protected $visible = [];
+    
+    
+    /**
      * Banco onde se encontram os dados da entidade, definidos no arquivo :  
      * \config\database no array connections.
      * 

@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,9 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
+    'log_max_files' => 30,
+    'log_level' => env('APP_LOG_LEVEL', 'error'),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,7 +170,12 @@ return [
         /**
          * SiteMap
          */
-        'Roumen\Sitemap\SitemapServiceProvider'
+        'Roumen\Sitemap\SitemapServiceProvider',
+
+        /**
+         * DebugBar
+         */
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -233,7 +240,12 @@ return [
         /*
          * Image Din
          */
-        'DinImage' => \Din\DinImage\Facades\DinImage::class
+        'DinImage' => \Din\DinImage\Facades\DinImage::class,
+
+        /*
+         * Debugbar
+         */
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

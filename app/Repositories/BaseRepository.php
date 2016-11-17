@@ -47,12 +47,6 @@ abstract class BaseRepository
      */
     protected $limit = null; // = getenv('LIMIT');
 
-
-    /**
-    * relacionamentos
-    */
-    protected $with = array();
-
     /**
      * Método construtor
      */
@@ -184,16 +178,6 @@ abstract class BaseRepository
         return $list;
     }
 
-    /**
-     * Seta na query os relacionamentos que devem ser retornados o obter o Objeto
-     * Relacionamentos definidos na variável <b>with</b>
-     * 
-     * @return query
-     */
-    public function setWith( )
-    {
-        return $this->query->with($this->with);
-    }
 
     /**
      * Active

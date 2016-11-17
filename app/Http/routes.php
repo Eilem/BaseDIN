@@ -21,3 +21,19 @@ Route::get('/404', [ 'as' => '404', 'uses' => 'ErrorController@index' ]);
 
 //sitemap
 Route::get('/sitemap.xml', [ 'as' => 'sitemap.index', 'uses' => 'SitemapController@index' ]);
+
+
+/**
+ * Home 
+ */
+Route::get('/', [ 'as' => 'home.index', 'uses' => 'HomeController@index' ]);
+
+
+/**
+ * Cache
+ */
+ Route::group( ['prefix' => 'cache'], function(){
+     
+    Route::get('/clear/all', [ 'as' => 'cache.clear.all', 'uses' => 'CacheController@clearAll' ] );
+
+ });

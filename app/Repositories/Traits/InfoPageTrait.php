@@ -107,7 +107,7 @@ trait InfoPageTrait
                 return $page;
             }
         }
-
+        
         return ($page);
     }
 
@@ -160,6 +160,7 @@ trait InfoPageTrait
         //seta breadcrumb do menu ( lembrando que a home já foi setada inicialmente na variável ($this->breadcrumb)
         $this->setBreadcrumb( $page->menu->title, $page->menu->getPresenter()->link );
         $this->setBreadcrumb( $page->title, $page->getPresenter()->link );
+        
     }
 
 

@@ -38,4 +38,23 @@ class SettingsRepository extends BaseRepository
         return $this->findById(1);
     }
 
+    
+    /**
+     * Obtém o campo de email do fomulário de contato
+     *
+     * Obs.: não retorna o objeto, retorna o valor preenchido do campo email_form_contact
+     *
+     * @return String
+     */
+    public function getEmailFormContact()
+    {
+        $this->arrayField = [
+            'email_form_contact'
+        ];
+
+        $settings =  $this->findById(1);
+
+        return $settings->email_form_contact;
+    }
+    
 }

@@ -8,6 +8,10 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Illuminate\Support\Facades\Log;
+use App\Exceptions\NotFoundException;
+use Illuminate\Session\TokenMismatchException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -26,7 +30,7 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Exception  $e
-     * @return void
+     * @return void 
      */
     public function report(Exception $e)
     {
@@ -45,25 +49,31 @@ class Handler extends ExceptionHandler
 
         if (getenv('APP_DEBUG') == 'true')
         {
-           return parent::render($request, $e);
+            //TRATANDO EXCEPTION  DE ERRO DE TOKEN EM DEV
+            if ($e instanceof TokenMismatchException)
+            {
+                return response()->json([  'message' => "Token não recebido" ], 400);
+            }
+
+            return parent::render($request, $e);
         }
 
         if ($e instanceof ModelNotFoundException)
         {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+            Log::error( $e->getMessage() ); 
+            return redirect(route('404'));
         }
 
-       if($this->isHttpException($e))
-       {
+        if($this->isHttpException($e))
+        {
 
          //retornando página de erro
           return redirect(route('404'));
 
-       } else {
+        } else {
 
            return parent::render($request, $e);
 
-       }
-
+        }
     }
 }
